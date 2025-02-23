@@ -37,6 +37,8 @@ fun MemoriesSection() {
                     .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.Center) {
                 listOf(
+                    R.drawable.assemble4,
+                    R.drawable.assemble5,
                     R.drawable.assemble1,
                     R.drawable.assemble2,
                     R.drawable.assemble3
