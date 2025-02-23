@@ -17,14 +17,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+
 @Composable
-fun GuestbookScreen(modifier: Modifier = Modifier, apiService: ApiService) {
+fun GuestbookScreen(apiService: ApiService) {
     var guestbookEntries by remember { mutableStateOf(listOf<Guestbook>()) }
     var newEntryText by remember { mutableStateOf(TextFieldValue("")) }
     var currentPage by remember { mutableStateOf(1) }
     val entriesPerPage = 6
 
-    // 방명록 목록 가져오기
     LaunchedEffect(Unit) {
         fetchGuestbookEntries(apiService) { entries ->
             guestbookEntries = entries
@@ -32,7 +33,7 @@ fun GuestbookScreen(modifier: Modifier = Modifier, apiService: ApiService) {
     }
 
     Column(
-        modifier = modifier // 여기서 전달된 modifier를 적용
+        modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
@@ -50,10 +51,12 @@ fun GuestbookScreen(modifier: Modifier = Modifier, apiService: ApiService) {
 
         Button(
             onClick = {
-                addGuestbookEntry(apiService, newEntryText.text) {
-                    newEntryText = TextFieldValue("")
-                    fetchGuestbookEntries(apiService) { entries ->
-                        guestbookEntries = entries
+                if (newEntryText.text.isNotBlank()) {
+                    addGuestbookEntry(apiService, newEntryText.text) {
+                        newEntryText = TextFieldValue("")
+                        fetchGuestbookEntries(apiService) { entries ->
+                            guestbookEntries = entries
+                        }
                     }
                 }
             },
@@ -64,24 +67,26 @@ fun GuestbookScreen(modifier: Modifier = Modifier, apiService: ApiService) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 방명록 목록 표시
+        // 방명록 목록
         val start = (currentPage - 1) * entriesPerPage
         val end = (start + entriesPerPage).coerceAtMost(guestbookEntries.size)
         val pageEntries = guestbookEntries.subList(start, end)
 
-        LazyColumn {
-            items(pageEntries) { entry ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Text(
-                        text = entry.content,
-                        modifier = Modifier.padding(16.dp),
-                        fontSize = 16.sp
-                    )
+        Box(modifier = Modifier.weight(1f)) {
+            LazyColumn {
+                items(pageEntries) { entry ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        elevation = CardDefaults.cardElevation(4.dp)
+                    ) {
+                        Text(
+                            text = entry.content,
+                            modifier = Modifier.padding(16.dp),
+                            fontSize = 16.sp
+                        )
+                    }
                 }
             }
         }
@@ -109,6 +114,7 @@ fun GuestbookScreen(modifier: Modifier = Modifier, apiService: ApiService) {
         }
     }
 }
+
 // 방명록 가져오기
 private fun fetchGuestbookEntries(apiService: ApiService, onResult: (List<Guestbook>) -> Unit) {
     apiService.getGuestbookEntries().enqueue(object : Callback<List<Guestbook>> {
