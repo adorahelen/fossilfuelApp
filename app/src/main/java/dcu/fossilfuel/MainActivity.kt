@@ -13,6 +13,7 @@ import dcu.fossilfuel.data.api.ApiClient
 import dcu.fossilfuel.data.api.ApiService
 import dcu.fossilfuel.ui.GuestbookScreen
 import dcu.fossilfuel.ui.HomeScreen
+import dcu.fossilfuel.ui.SignupScreen
 import dcu.fossilfuel.ui.theme.FossilfuelTheme
 
 
@@ -32,7 +33,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     content = { innerPadding ->
                         Column(modifier = Modifier.padding(innerPadding)) {
-                            // 화면 전환 버튼
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -43,13 +43,17 @@ class MainActivity : ComponentActivity() {
                                 Button(onClick = { currentScreen = "Guestbook" }) {
                                     Text("방명록")
                                 }
+                                Button(onClick = { currentScreen = "Signup" }) {
+                                    Text("회원가입")
+                                }
                             }
 
                             Spacer(modifier = Modifier.height(16.dp))
 
                             when (currentScreen) {
-                                "Home" -> HomeScreen(apiService = apiService)
-                                "Guestbook" -> GuestbookScreen(apiService = apiService)
+                                "Home" -> HomeScreen(apiService)
+                                "Guestbook" -> GuestbookScreen(apiService)
+                                "Signup" -> SignupScreen(apiService)
                             }
                         }
                     }

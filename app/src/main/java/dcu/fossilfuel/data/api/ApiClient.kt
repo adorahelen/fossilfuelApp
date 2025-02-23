@@ -20,3 +20,4 @@ object ApiClient {
     fun getClient(): Retrofit = retrofit
 
 }
+
