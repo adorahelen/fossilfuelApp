@@ -1,6 +1,7 @@
 package dcu.fossilfuel.ui
 
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -14,6 +15,9 @@ fun NavigationGraph(navController: NavHostController, apiService: ApiService) {
         composable("home") { HomeScreen(navController, apiService) }
         composable("guestbook") { GuestbookScreen(apiService) }
         composable("signup") { SignupScreen(navController,apiService) }
+        composable("chatbot") { ChatBotScreen(navController) }
+        composable("login") { LoginScreen(navController) }
+
 
 
 
