@@ -13,10 +13,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import dcu.fossilfuel.R
 
 @Composable
-fun TitleSection() {
+fun TitleSection(navController: NavController) { // navController 추가
     Surface(
         shape = RoundedCornerShape(12.dp),
         shadowElevation = 4.dp,
@@ -59,9 +60,17 @@ fun TitleSection() {
                 modifier = Modifier.padding(top = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Button(onClick = { /* 로그인 이동 */ }) { Text("로그인") }
-                Button(onClick = { /* 회원가입 이동 */ }) { Text("회원가입") }
-                Button(onClick = { /* 챗봇 이동 */ }) { Text("AI 챗봇") }
+                Button(onClick = { navController.navigate("login") }) {
+                    Text("로그인")
+                }
+
+                Button(onClick = { navController.navigate("signup") }) {
+                    Text("회원가입")
+                }
+
+                Button(onClick = { navController.navigate("chatbot") }) {
+                    Text("AI 챗봇")
+                }
             }
         }
     }

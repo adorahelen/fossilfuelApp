@@ -41,6 +41,10 @@ android {
 
 dependencies {
 
+    // 상단 버튼이 아닌, @Composable 함수에서 직접 화면 전환을 처리하기 위해서 사용
+    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha10")
+
+
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") // JSON 변환기

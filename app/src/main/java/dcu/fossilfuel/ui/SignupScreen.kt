@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import dcu.fossilfuel.data.api.ApiService
 import dcu.fossilfuel.data.model.SignupDto
 import okhttp3.ResponseBody
@@ -20,7 +21,7 @@ import retrofit2.Response
 
 
 @Composable
-fun SignupScreen(apiService: ApiService) {
+fun SignupScreen(navController: NavHostController, apiService: ApiService) {
     var nickname by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
